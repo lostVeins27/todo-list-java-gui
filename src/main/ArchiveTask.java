@@ -9,69 +9,70 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class ArchiveTask extends JDialog implements ActionListener {
-
 	
-	private final JButton btnRemoveSelected, btnRemoveAll, btnExit;
-	private final JPanel panelArchivedTask;
-	private static List<SerializableCheckBox> archivedTask = new ArrayList<>();
-	private static boolean hasAdd;
+	// GUI COMPONENTS
+	private final JButton btnRemoveSelected, btnRemoveAll, btnExit; // Buttons for task removal and exit.
+	private final JPanel panelArchivedTask; // Panel displaying the list of archived task.
+	private static List<SerializableCheckBox> archivedTask = new ArrayList<>(); // Stores serialized check box representing tasks archive from ToDo list.
+	private static boolean hasAdd; // Flag indicating whether a task has been passed from main ToDo Frame to the ArchiveTask
+	JFrame parentFrame; // the main frame that contains the ToDo list.
+	JToolBar tb; // Tool bar for select all & de-select all buttons.
 	
-	JFrame parentFrame;
-	
-	JToolBar tb;
-	
+	// Constructor for the ArchiveTask window. It takes the parent frame as a parameter.
 	ArchiveTask(JFrame parentFrame){
+	
+		this.parentFrame = parentFrame; // sets parent frame for positioning the window relative to it.
 		
-		this.parentFrame = parentFrame;
+		setTitle("Archive"); // Sets title to the window "Archive".
+		setResizable(false); // Disables resize-able window. If true enables window resizing.
+		setSize(300, 200); // Sets window size (width, length).
+		setLocationRelativeTo(parentFrame); // Centers the window relative to the parent frame.
+		setModal(true); // Makes the window modal which blocks all other window interactions until closed.
 		
-		setTitle("Archive");
-		setResizable(false);
-		setSize(300, 200);
-		setLocationRelativeTo(parentFrame);
-		setModal(true);
+		// Creating and configuring the panel to hold archive task, inside a scroll-able area.
+		panelArchivedTask = new JPanel(); // Initialize a new panel for holding archived tasks.
+		panelArchivedTask.setLayout(new BoxLayout(panelArchivedTask, BoxLayout.Y_AXIS)); // Sets the layout to display the task to goes under another.
 		
-		//panel layout inside JScrollPane
-		panelArchivedTask = new JPanel();
-		panelArchivedTask.setLayout(new BoxLayout(panelArchivedTask, BoxLayout.Y_AXIS));
 		
+		// If the has add is true, meaning an archived tasks were added, it will run the following code.
 		if(hasAdd) {
-			Collections.reverse(archivedTask);
-			hasAdd = false;
+			Collections.reverse(archivedTask); // Reverses the order of tasks in the list.
+			hasAdd = false; // Sets 'hasAdd' to false because that only runs once if archived tasks were added.
 		}
 		
+		// Call the method 'toLabel' that converts check boxes(the archive task) to a label 
 		toLabel();
 		
-		//JScrollPane that will hold the panel
+		// Create a JScrollPane to hold and make the panel that contains archived tasks scroll-able.
 		JScrollPane sp = new JScrollPane(panelArchivedTask);
-		//border layout centering the scroll pane
-		add(sp, BorderLayout.CENTER);
+		add(sp, BorderLayout.CENTER); // Adds the scroll pane to the center of the window.
 		
-		JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		Font btnFont = new Font("Arial", Font.BOLD, 10);
+		//Create a panel that will hold the Buttons in the bottom of the window.
+		JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); 
 		
-		btnRemoveSelected = new JButton("REMOVE SELECTED");
-		btnRemoveSelected.setFont(btnFont);
-		btnRemoveSelected.setPreferredSize(new Dimension(110, 23));
-		btnRemoveSelected.setMargin(new Insets(0, 0, 0, 0));
-		btnRemoveSelected.addActionListener(this);
-		btnPanel.add(btnRemoveSelected);
+		// Create and configure the "REMOVE SELECTED" Button;
+		Font btnFont = new Font("Arial", Font.BOLD, 10); // Sets a font that will be shared to all the buttons.
+		btnRemoveSelected = new JButton("REMOVE SELECTED"); // Initialize the "REMOVE SELECTED" button.
+		btnRemoveSelected.setFont(btnFont); // Sets the font for the button.
+		btnRemoveSelected.setPreferredSize(new Dimension(110, 23)); // Sets the preferred size for the button.
+		btnRemoveSelected.setMargin(new Insets(0, 0, 0, 0)); // Sets margin to remove extra spaces around the button text.
+		btnRemoveSelected.addActionListener(this); // Add action listener to handle button clicks.
+		btnPanel.add(btnRemoveSelected); // Add the button to the button panel.
 		
-		btnRemoveAll = new JButton("REMOVE ALL");
-		btnRemoveAll.setFont(btnFont);
-		btnRemoveAll.addActionListener(this);
-		btnPanel.add(btnRemoveAll);
+		btnRemoveAll = new JButton("REMOVE ALL"); // Initialize the "REMOVE ALL" button.
+		btnRemoveAll.setFont(btnFont); // Sets the font for the button.
+		btnRemoveAll.addActionListener(this); // Adds action listener for the button "REMOVE ALL".
+		btnPanel.add(btnRemoveAll); // Adds the "REMOVE ALL" button to the button panel.
 		
-		btnExit = new JButton("EXIT");
-		btnExit.setFont(btnFont);
-		btnExit.addActionListener(this);
-		btnPanel.add(btnExit);
+		btnExit = new JButton("EXIT"); // Initialize the "EXIT" button.
+		btnExit.setFont(btnFont); // Sets the font for the button.
+		btnExit.addActionListener(this); // Adds action listener for the "EXIT" button.
+		btnPanel.add(btnExit); // Adds the "EXIT" button to the button panel.
 		
-		add(btnPanel, BorderLayout.SOUTH);
-		
-		
-		setVisible(true);
+		add(btnPanel, BorderLayout.SOUTH); // Adds the button panel to the south(bottom) border of the frame.
 		
 		
+		setVisible(true); // Makes the window visible to the user.
 		
 	}
 
@@ -80,9 +81,10 @@ public class ArchiveTask extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+		// runs whenever the "REMOVE SELECTED" button is clicked.
 		if(e.getSource() == btnRemoveSelected) {
 				
-			
+			// Calls 
 			removeSelectedButtonSwitch();
 			
 		}
