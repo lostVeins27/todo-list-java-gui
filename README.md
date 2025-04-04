@@ -19,6 +19,6 @@ A Java-based todo-list application with the use of Swing GUI and have local stor
 - This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
-- For any questions or suggestions, you can email me at [EMAIL](doquillodaniel@gmail.com).
+- For any questions or suggestions, you can email me at [doquillodaniel@gmail.com](mailto:doquillodaniel@gmail.com).
 
 
