@@ -66,6 +66,8 @@ public class ToDoMain extends JFrame implements ActionListener, ItemListener {
 		btnClearTask.addActionListener(this);
 		btnPanel.add(btnClearTask);
 		
+		setButtonsState(taskCheckBox);
+		
 		add(btnPanel, BorderLayout.SOUTH);
 		
 		setTitle("To-Do List");
@@ -110,6 +112,7 @@ public class ToDoMain extends JFrame implements ActionListener, ItemListener {
 			
 		}
 		
+		setButtonsState(taskCheckBox);
 		
 		if(e.getSource() == menuItemQuit) {
 			int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?", "Exit", JOptionPane.YES_NO_CANCEL_OPTION);
@@ -125,6 +128,13 @@ public class ToDoMain extends JFrame implements ActionListener, ItemListener {
 			JOptionPane.showMessageDialog(null, "Programmed by Daniel", "About Programmer", JOptionPane.INFORMATION_MESSAGE);
 		}
 		
+	}
+	
+	private void setButtonsState(List<SerializableCheckBox> taskslist) {
+		if (taskslist != null) {
+			btnArchive.setEnabled(!taskslist.isEmpty());
+			btnClearTask.setEnabled(!taskslist.isEmpty());
+		}
 	}
 	
 	private void archiveTasks() {
